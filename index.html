@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Drift Lab is a playful memory arcade with word, number, and symbol recall games."
+    />
+    <title>Drift Lab — Memory Arcade</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="grain" aria-hidden="true"></div>
+    <header class="site-header">
+      <a class="brand" href="#/" aria-label="Drift Lab home">
+        <span class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </span>
+        <span>Drift Lab</span>
+      </a>
+      <div class="scoreboard" aria-label="Session score">
+        <span>Session</span>
+        <strong id="session-score">0</strong>
+        <span>points</span>
+      </div>
+    </header>
+
+    <main id="top">
+      <div id="home-view">
+        <section class="intro" aria-labelledby="page-title">
+          <div class="intro-copy">
+            <p class="eyebrow">Three small tests for a busy mind</p>
+            <h1 id="page-title">Hold the thought<br /><em>before it drifts.</em></h1>
+          </div>
+        </section>
+
+        <section class="game-library" aria-labelledby="games-title">
+          <div class="section-heading">
+            <p class="eyebrow">Memory shelf</p>
+            <h2 id="games-title">Choose a game</h2>
+          </div>
+          <div class="game-grid">
+            <a class="game-card card-words" href="#/game/words">
+              <span class="game-card-number">01</span>
+              <div class="word-sample" aria-hidden="true"><span>meadow</span><span>ribbon</span><span>comet</span></div>
+              <div>
+                <p>Vocabulary recall</p>
+                <h3>Word Fade</h3>
+                <span class="card-link">Enter game <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+            <a class="game-card card-number" href="#/game/numbers">
+              <span class="game-card-number">02</span>
+              <div class="number-sample" aria-hidden="true">6 8 2<br />1 4 9</div>
+              <div>
+                <p>Digit recall</p>
+                <h3>Catch the Number</h3>
+                <span class="card-link">Enter game <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+            <a class="game-card card-symbols" href="#/game/symbols">
+              <span class="game-card-number">03</span>
+              <div class="symbol-sample" aria-hidden="true"><span>○</span><span>△</span><span>◇</span><span>+</span></div>
+              <div>
+                <p>Pattern recall</p>
+                <h3>Sequence Stream</h3>
+                <span class="card-link">Enter game <span aria-hidden="true">→</span></span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="task-manager" aria-labelledby="medication-title">
+          <div class="task-heading">
+            <p class="eyebrow">Tasks</p>
+            <h2 id="medication-title">Medication</h2>
+          </div>
+          <div class="task-content">
+            <form class="task-form" id="medication-form">
+              <input
+                id="medication-name"
+                type="text"
+                maxlength="80"
+                autocomplete="off"
+                placeholder="Medication"
+                aria-label="Medication name"
+                required
+              />
+              <input id="medication-time" type="time" aria-label="Medication time" required />
+              <button class="primary-button" id="add-medication" type="submit">Add</button>
+            </form>
+            <p class="task-status" id="medication-status" role="status"></p>
+            <ul class="task-list" id="medication-list" aria-label="Medication tasks"></ul>
+          </div>
+        </section>
+
+        <section class="ai-helper" aria-labelledby="helper-title">
+          <div class="helper-copy">
+            <h2 id="helper-title">Ask a small question.<br /><em>Get a clear answer.</em></h2>
+            <p>Practical help in a few short sentences. No long paragraphs.</p>
+          </div>
+          <form class="helper-form" id="helper-form">
+            <label for="helper-question">What do you need help with?</label>
+            <textarea
+              id="helper-question"
+              name="question"
+              rows="4"
+              maxlength="1200"
+              placeholder="How can I stay focused while studying?"
+              required
+            ></textarea>
+            <div class="helper-actions">
+              <span><span id="question-count">0</span>/1200</span>
+              <button class="primary-button" id="ask-helper" type="submit">Ask clearly</button>
+            </div>
+            <div class="helper-answer" id="helper-answer" role="status" aria-live="polite" hidden></div>
+          </form>
+        </section>
+      </div>
+
+      <div class="game-view" id="game-view" hidden>
+        <div class="game-window-bar">
+          <a class="back-button" href="#/" aria-label="Back to all games"><span aria-hidden="true">←</span> All games</a>
+          <span id="game-window-label">Memory game</span>
+        </div>
+        <section class="game-stage" aria-live="polite">
+        <article class="game-panel is-active" id="words-game" data-panel="words">
+          <div class="game-meta">
+            <div>
+              <p class="game-kicker">Vocabulary recall</p>
+              <h2>Word Fade</h2>
+            </div>
+            <div class="round-counter">Round <span data-round="words">1</span></div>
+          </div>
+
+          <div class="playfield word-playfield">
+            <div class="instruction" id="words-instruction">Press start, then memorize every word.</div>
+            <div class="word-cloud" id="word-cloud" aria-label="Words to remember">
+              <span class="word-placeholder">ready when you are</span>
+            </div>
+            <div class="recall-area" id="word-recall" hidden>
+              <label for="word-input">Type the words you remember</label>
+              <div class="input-row">
+                <input
+                  id="word-input"
+                  type="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="one word at a time"
+                />
+                <button class="small-button" id="add-word" type="button">Add word</button>
+              </div>
+              <div class="answer-chips" id="word-answers" aria-label="Your recalled words"></div>
+            </div>
+          </div>
+
+          <div class="game-actions">
+            <button class="primary-button" id="start-words" type="button">Start word fade</button>
+            <button class="text-button" id="check-words" type="button" hidden>Check my words</button>
+          </div>
+          <div class="result-message" id="words-result" role="status"></div>
+        </article>
+
+        <article class="game-panel" id="numbers-game" data-panel="numbers" hidden>
+          <div class="game-meta">
+            <div>
+              <p class="game-kicker">Digit recall</p>
+              <h2>Catch the Number</h2>
+            </div>
+            <div class="round-counter">Round <span data-round="numbers">1</span></div>
+          </div>
+
+          <div class="playfield number-playfield">
+            <div class="instruction" id="numbers-instruction">A six-digit number appears briefly. Catch it.</div>
+            <div class="number-display" id="number-display" aria-label="Number to remember">— — — — — —</div>
+            <div class="number-entry" id="number-entry" hidden>
+              <label for="number-input">Enter the six digits</label>
+              <input
+                id="number-input"
+                type="text"
+                inputmode="numeric"
+                autocomplete="off"
+                maxlength="6"
+                pattern="[0-9]{6}"
+                placeholder="000000"
+              />
+            </div>
+          </div>
+
+          <div class="game-actions">
+            <button class="primary-button" id="start-numbers" type="button">Show me a number</button>
+            <button class="text-button" id="check-number" type="button" hidden>Check number</button>
+          </div>
+          <div class="result-message" id="numbers-result" role="status"></div>
+        </article>
+
+        <article class="game-panel" id="symbols-game" data-panel="symbols" hidden>
+          <div class="game-meta">
+            <div>
+              <p class="game-kicker">Pattern recall</p>
+              <h2>Sequence Stream</h2>
+            </div>
+            <div class="round-counter">Round <span data-round="symbols">1</span></div>
+          </div>
+
+          <div class="playfield symbol-playfield">
+            <div class="instruction" id="symbols-instruction">Watch the stream of four symbols, in order.</div>
+            <div class="symbol-stream" id="symbol-stream" aria-label="Symbol sequence">
+              <span>?</span><span>?</span><span>?</span><span>?</span>
+            </div>
+            <div class="symbol-recall" id="symbol-recall" hidden>
+              <p>Build the same four-symbol sequence</p>
+              <div class="symbol-answer" id="symbol-answer" aria-label="Your symbol sequence">
+                <span></span><span></span><span></span><span></span>
+              </div>
+              <div class="symbol-keypad" id="symbol-keypad" aria-label="Symbol choices"></div>
+            </div>
+          </div>
+
+          <div class="game-actions">
+            <button class="primary-button" id="start-symbols" type="button">Start the stream</button>
+            <button class="text-button" id="clear-symbols" type="button" hidden>Clear answer</button>
+          </div>
+          <div class="result-message" id="symbols-result" role="status"></div>
+        </article>
+        </section>
+      </div>
+    </main>
+
+    <footer id="site-footer">
+      <p>Memory is less like a vault, more like a tide.</p>
+      <button id="reset-session" type="button">Reset session</button>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>

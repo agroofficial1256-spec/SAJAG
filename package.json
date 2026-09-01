@@ -1,0 +1,15 @@
+{
+  "name": "drift-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A compact memory arcade with concise AI help.",
+  "dependencies": {
+    "@netlify/blobs": "^11.0.2",
+    "@netlify/functions": "latest",
+    "openai": "latest"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
